@@ -1,0 +1,116 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: darkslategray;
+}
+
+.container {
+    margin: 0 auto;
+    max-width: 1080px;
+}
+
+:root {
+    --rows-per-cols: 10;
+}
+
+
+/* HEADER */
+
+header {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    color: black;
+    height: 100px;
+    line-height: 100px;
+    padding: 0 40px;
+    font-size: 1.5rem;
+}
+
+form {
+    display: flex;
+    align-items: center;
+    column-gap: 50px;
+}
+
+select,
+button {
+    font-size: 1.5rem;
+}
+
+#play {
+    padding: 5px 10px;
+}
+
+/* MAIN */
+
+main {
+    height: calc(100vh - 170px);
+    display: flex;
+    align-items: center;
+}
+
+.grid {
+    margin: 0 auto;
+    width: 700px;
+    height: 700px;
+    border: 2px solid white;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+.grid.d-none {
+    display: none;
+}
+
+.cell {
+    border: 2px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+    background-color: rgb(220, 20, 60);
+
+}
+
+
+.cell:hover {
+    border-radius: 20%;
+    scale: 1.1;
+    font-weight: bold;
+}
+
+.cell-sm {
+    height: calc(100% / 10);
+    width: calc(100% / 10);
+}
+
+.cell-m {
+    height: calc(100% / 9);
+    width: calc(100% / 9);
+}
+
+.cell-l {
+    height: calc(100% / 7);
+    width: calc(100% / 7);
+}
+
+.cell.clicked {
+    background-color: chocolate;
+}
+
+/* Footer */
+
+footer {
+    height: 70px;
+    background-color: white;
+    padding: 0 40px;
+    line-height: 70px;
+    font-size: 1.2rem;
+}
