@@ -67,12 +67,34 @@ const createBombs = (totCells, totBombs) => {
     return bombs;
 }
 
-const endGame = (hasWon) => {
+/**
+ * reveals the content of the whole grid
+ * @param {*} bombs the bombs list
+ */
+const revealAllCellS = (bombs) => {
+    const cells = document.querySelectorAll('.cell');
+    for (let cell of cells) {
+        cell.classList.add('clicked')
+        if (bombs.includes(parseInt(cell.innerText))) {
+            cell.classList.add('bomb');
+        }
+    }
+}
+
+/**
+ * it makes the game to finish
+ * @param {Array} bombs the bomb list
+ * @param {Function} revealFunction the function to reveal all the cells
+ * @param {*} hasWon it checks whether it's a won or lost game
+ */
+const endGame = (bombs, revealFunction, hasWon) => {
     isGameOver = true;
     console.log(isGameOver);
     const message = hasWon ? 'Complimenti, hai vinto!' : 'Mi spiace, hai perso!';
     console.log(message);
+    revealFunction(bombs);
 }
+
 
 
 // Svolgimento
@@ -104,17 +126,17 @@ form.addEventListener('submit', e => {
         case 'easy':
             rows = 7;
             cols = 7;
-            totBombs = 14;
+            totBombs = 5;
             break;
         case 'normal':
             rows = 9;
             cols = 9;
-            totBombs = 20;
+            totBombs = 10;
             break;
         case 'hard':
             rows = 10;
             cols = 10;
-            totBombs = 25;
+            totBombs = 15;
             break;
     }
     // Calcolo il numero di celle
@@ -136,27 +158,27 @@ form.addEventListener('submit', e => {
         }
         // Creo un event listener per reagire al click sulle celle
         cell.addEventListener('click', () => {
-            console.log(isGameOver);
             // Disabilito il click sulle celle già cliccate o se ho già perso
             if (isGameOver || cell.classList.contains('clicked')) {
-                console.log(cell.classList);
                 return;
             }
-
+            // Rendo la cella cliccata
             cell.classList.add('clicked');
             console.log('Cella cliccata: ', i);
+            // Controllo se è stata cliccata una bomba
             const hasHitBomb = bombs.includes(parseInt(cell.innerText));
+            // Se si allora endGame fa finire il gioco con sconfitta
             if (hasHitBomb) {
                 cell.classList.add('bomb');
-                endGame(false);
+                endGame(bombs, revealAllCellS, false);
             } else {
-
+                // Altrimenti incremento il punteggio
                 scoreBoard.innerText = String(++score).padStart(2, '0');
             }
 
-            // Controllo se è stato raggiunto il punteggio massimo
+            // Controllo se è stato raggiunto il punteggio massimo e se l'esito è positivo fa finire il gioco per vittoria
             if (score === maxScore) {
-                endGame(true);
+                endGame(bombs, revealAllCellS, true);
             }
         })
         grid.appendChild(cell);
