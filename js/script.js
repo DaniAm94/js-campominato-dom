@@ -3,6 +3,7 @@ const challenge = document.getElementById('challenge');
 const scoreBoard = document.getElementById('score-board');
 const form = document.querySelector('form');
 const grid = document.querySelector('.grid');
+const button = document.getElementById('play');
 
 // Preparazione
 let rows;
@@ -10,6 +11,10 @@ let cols;
 let totCells;
 let totBombs;
 let score = 0;
+let maxScore;
+let isGameOver;
+
+
 
 
 // Funzioni
@@ -62,10 +67,20 @@ const createBombs = (totCells, totBombs) => {
     return bombs;
 }
 
+const endGame = (hasWon) => {
+    isGameOver = true;
+    console.log(isGameOver);
+    const message = hasWon ? 'Complimenti, hai vinto!' : 'Mi spiace, hai perso!';
+    console.log(message);
+}
+
 
 // Svolgimento
 form.addEventListener('submit', e => {
     e.preventDefault();
+    button.innerText = 'Restart';
+    isGameOver = false;
+
     // Ripulisco la griglia
     grid.innerHTML = '';
     // Resetto il punteggio
@@ -109,6 +124,9 @@ form.addEventListener('submit', e => {
     const bombs = createBombs(totCells, totBombs);
     console.log(bombs);
 
+    // Calcolo il punteggio massimo
+    maxScore = totCells - totBombs;
+
     //Genero le celle e le appendo alla griglia
     for (let i = 1; i <= totCells; i++) {
         const cell = createCell(difficulty, i);
@@ -118,12 +136,28 @@ form.addEventListener('submit', e => {
         }
         // Creo un event listener per reagire al click sulle celle
         cell.addEventListener('click', () => {
-            // Disabilito il click sulle celle già cliccate
-            if (cell.classList.contains('clicked')) return;
+            console.log(isGameOver);
+            // Disabilito il click sulle celle già cliccate o se ho già perso
+            if (isGameOver || cell.classList.contains('clicked')) {
+                console.log(cell.classList);
+                return;
+            }
+
             cell.classList.add('clicked');
-            score++;
-            scoreBoard.innerText = String(score).padStart(2, '0');
             console.log('Cella cliccata: ', i);
+            const hasHitBomb = bombs.includes(parseInt(cell.innerText));
+            if (hasHitBomb) {
+                cell.classList.add('bomb');
+                endGame(false);
+            } else {
+
+                scoreBoard.innerText = String(++score).padStart(2, '0');
+            }
+
+            // Controllo se è stato raggiunto il punteggio massimo
+            if (score === maxScore) {
+                endGame(true);
+            }
         })
         grid.appendChild(cell);
     }
