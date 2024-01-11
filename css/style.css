@@ -75,7 +75,7 @@ main {
     justify-content: center;
     color: white;
     cursor: pointer;
-    background-color: rgb(220, 20, 60);
+    background-color: forestgreen;
 
 }
 
@@ -103,6 +103,18 @@ main {
 
 .cell.clicked {
     background-color: chocolate;
+}
+
+.cell.clicked.bomb {
+    background-color: darkred;
+}
+
+.cell.clicked.bomb::before {
+    display: inline-block;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font: var(--fa-font-solid);
+    content: "\f1e2";
 }
 
 /* Footer */
