@@ -102,8 +102,14 @@ form.addEventListener('submit', e => {
     //Genero le celle e le appendo alla griglia
     for (let i = 1; i <= totCells; i++) {
         const cell = createCell(difficulty, i);
+        // Se la cella è contenuta nella lista di bombe le attribuisco la classe bomb
+        if (bombs.includes(parseInt(cell.innerText))) {
+            cell.classList.add('bomb');
+        }
         // Creo un event listener per reagire al click sulle celle
         cell.addEventListener('click', () => {
+            // Disabilito il click sulle celle già cliccate
+            if (cell.classList.contains('clicked')) return;
             cell.classList.add('clicked');
             console.log('Cella cliccata: ', i);
         })

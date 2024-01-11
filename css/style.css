@@ -103,6 +103,7 @@ main {
 
 .cell.clicked {
     background-color: chocolate;
+    cursor: not-allowed;
 }
 
 .cell.clicked.bomb {
