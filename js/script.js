@@ -1,5 +1,6 @@
 // Recupero gli elementi dal DOm
 const challenge = document.getElementById('challenge');
+const scoreBoard = document.getElementById('score-board');
 const form = document.querySelector('form');
 const grid = document.querySelector('.grid');
 
@@ -7,7 +8,11 @@ const grid = document.querySelector('.grid');
 let rows;
 let cols;
 let totCells;
-let totBombs = 15;
+let totBombs;
+let score = 0;
+console.log(score);
+scoreBoard.innerText = String(score).padStart(2, '0');
+
 
 // Funzioni
 
@@ -56,9 +61,10 @@ const createBombs = (totCells, totBombs) => {
             bombs.push(bomb);
         }
     }
-
     return bombs;
 }
+
+
 
 // Svolgimento
 form.addEventListener('submit', e => {
@@ -82,14 +88,17 @@ form.addEventListener('submit', e => {
         case 'easy':
             rows = 7;
             cols = 7;
+            totBombs = 14;
             break;
         case 'normal':
             rows = 9;
             cols = 9;
+            totBombs = 20;
             break;
         case 'hard':
             rows = 10;
             cols = 10;
+            totBombs = 25;
             break;
     }
     // Calcolo il numero di celle
