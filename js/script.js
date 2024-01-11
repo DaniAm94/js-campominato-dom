@@ -7,6 +7,7 @@ const grid = document.querySelector('.grid');
 let rows;
 let cols;
 let totCells;
+let totBombs = 15;
 
 // Funzioni
 
@@ -39,6 +40,24 @@ const createCell = (difficulty, content) => {
             break;
     }
     return cell;
+}
+
+/**
+ * Generate a spedified number of bombs depending on the size of the grid
+ * @param {number} totCells grid size
+ * @param {number} totBombs bombs to create
+ * @returns a list of bombs
+ */
+const createBombs = (totCells, totBombs) => {
+    const bombs = [];
+    while (bombs.length < totBombs) {
+        const bomb = Math.floor(Math.random() * totCells) + 1;
+        if (!bombs.includes(bomb)) {
+            bombs.push(bomb);
+        }
+    }
+
+    return bombs;
 }
 
 // Svolgimento
@@ -75,6 +94,10 @@ form.addEventListener('submit', e => {
     }
     // Calcolo il numero di celle
     totCells = rows * cols;
+
+    // Creo la lista di bombe
+    const bombs = createBombs(totCells, totBombs);
+    console.log(bombs);
 
     //Genero le celle e le appendo alla griglia
     for (let i = 1; i <= totCells; i++) {
