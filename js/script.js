@@ -10,8 +10,6 @@ let cols;
 let totCells;
 let totBombs;
 let score = 0;
-console.log(score);
-scoreBoard.innerText = String(score).padStart(2, '0');
 
 
 // Funzioni
@@ -65,12 +63,15 @@ const createBombs = (totCells, totBombs) => {
 }
 
 
-
 // Svolgimento
 form.addEventListener('submit', e => {
     e.preventDefault();
     // Ripulisco la griglia
     grid.innerHTML = '';
+    // Resetto il punteggio
+    score = 0;
+    scoreBoard.innerText = String(score).padStart(2, '0');
+
     const difficulty = challenge.value;
 
     // ! Validazione
@@ -120,6 +121,8 @@ form.addEventListener('submit', e => {
             // Disabilito il click sulle celle già cliccate
             if (cell.classList.contains('clicked')) return;
             cell.classList.add('clicked');
+            score++;
+            scoreBoard.innerText = String(score).padStart(2, '0');
             console.log('Cella cliccata: ', i);
         })
         grid.appendChild(cell);
