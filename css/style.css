@@ -22,6 +22,7 @@ body {
 
 header {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     background-color: white;
     color: black;
@@ -29,6 +30,7 @@ header {
     line-height: 100px;
     padding: 0 40px;
     font-size: 1.5rem;
+    column-gap: 2rem;
 }
 
 
