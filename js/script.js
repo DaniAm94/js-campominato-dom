@@ -24,7 +24,6 @@ let bottomRight;
 
 
 
-
 // Funzioni
 
 /**
@@ -116,6 +115,17 @@ const endGame = (bombs, revealFunction, hasWon) => {
     grid.appendChild(win);
 }
 
+const clickUp = (cell, direction, cols) => {
+    while (cell[direction] && cell[direction + cols].children.length < 1) {
+        if (!cell[direction].classList.contains('bomb')) {
+            cell[direction].classList.add('clicked');
+        }
+
+        direction -= cols;
+
+    }
+}
+
 
 
 // Svolgimento
@@ -147,17 +157,17 @@ form.addEventListener('submit', e => {
         case 'easy':
             rows = 7;
             cols = 7;
-            totBombs = 10;
+            totBombs = 6;
             break;
         case 'normal':
             rows = 9;
             cols = 9;
-            totBombs = 25;
+            totBombs = 13;
             break;
         case 'hard':
             rows = 10;
             cols = 10;
-            totBombs = 34;
+            totBombs = 20;
             break;
     }
     // Calcolo il numero di celle
@@ -223,52 +233,94 @@ form.addEventListener('submit', e => {
             if (cells[left] && (parseInt(cells[left].innerText) % cols) && !cells[left].classList.contains('bomb')) {
                 const detector = document.createElement('div');
                 detector.classList.add('bomb-detector');
-                detector.innerText = '!';
                 cells[left].appendChild(detector);
+
             }
             if (cells[right] && (parseInt(cells[i].innerText) % cols) && !cells[right].classList.contains('bomb')) {
                 const detector = document.createElement('div');
                 detector.classList.add('bomb-detector');
-                detector.innerText = '!';
                 cells[right].appendChild(detector);
             }
             if (cells[up] && !cells[up].classList.contains('bomb')) {
                 const detector = document.createElement('div');
                 detector.classList.add('bomb-detector');
-                detector.innerText = '!';
                 cells[up].appendChild(detector);
             }
             if (cells[bottom] && !cells[bottom].classList.contains('bomb')) {
                 const detector = document.createElement('div');
                 detector.classList.add('bomb-detector');
-                detector.innerText = '!';
                 cells[bottom].appendChild(detector);
             }
             if (cells[upLeft] && (parseInt(cells[upLeft].innerText) % cols) && !cells[upLeft].classList.contains('bomb')) {
                 const detector = document.createElement('div');
                 detector.classList.add('bomb-detector');
-                detector.innerText = '!';
                 cells[upLeft].appendChild(detector);
             }
             if (cells[upRight] && (parseInt(cells[i].innerText) % cols) && !cells[upRight].classList.contains('bomb')) {
                 const detector = document.createElement('div');
                 detector.classList.add('bomb-detector');
-                detector.innerText = '!';
                 cells[upRight].appendChild(detector);
             }
             if (cells[bottomLeft] && (parseInt(cells[bottomLeft].innerText) % cols) && !cells[bottomLeft].classList.contains('bomb')) {
                 const detector = document.createElement('div');
                 detector.classList.add('bomb-detector');
-                detector.innerText = '!';
                 cells[bottomLeft].appendChild(detector);
             }
             if (cells[bottomRight] && (parseInt(cells[i].innerText) % cols) && !cells[bottomRight].classList.contains('bomb')) {
                 const detector = document.createElement('div');
                 detector.classList.add('bomb-detector');
-                detector.innerText = '!';
                 cells[bottomRight].appendChild(detector);
             }
         }
+    }
+    for (let i = 0; i < cells.length; i++) {
+        cells[i].addEventListener('click', () => {
+            left = i - 1;
+            right = i + 1;
+            up = i - cols;
+            bottom = i + cols;
+            upLeft = i - cols - 1;
+            upRight = i - cols + 1;
+            bottomLeft = i + cols - 1;
+            bottomRight = i + cols + 1;
+            console.log(cells[i].children.length);
+            // TODO Correggere: vengono cliccate celle già cliccate, conteggio score errato
+            if (cells[i].children.length < 1) {
+                // auto click in alto fino a trovare un bomb detector
+                while (cells[up] && cells[up + cols].children.length < 1) {
+                    if (!cells[up].classList.contains('bomb')) {
+                        cells[up].classList.add('clicked');
+                        scoreBoard.innerText = String(++score).padStart(2, '0');
+                    }
+                    up -= cols;
+                }
+                // Auto click in basso fino a trovare un bomb detector
+                while (cells[bottom] && cells[bottom - cols].children.length < 1) {
+                    if (!cells[bottom].classList.contains('bomb')) {
+                        cells[bottom].classList.add('clicked');
+                        scoreBoard.innerText = String(++score).padStart(2, '0');
+                    }
+                    bottom += cols;
+                }
+                // Auto click a destra ......
+                while (cells[right] && parseInt(cells[right - 1].innerText) % cols && cells[right - 1].children.length < 1) {
+                    if (!cells[right].classList.contains('bomb')) {
+                        cells[right].classList.add('clicked');
+                        scoreBoard.innerText = String(++score).padStart(2, '0');
+                    }
+                    right++;
+                }
+                // Auto click a sinistra.....
+                while (cells[left] && parseInt(cells[left].innerText) % cols && cells[left + 1].children.length < 1) {
+                    if (!cells[left].classList.contains('bomb')) {
+                        cells[left].classList.add('clicked');
+                        scoreBoard.innerText = String(++score).padStart(2, '0');
+                    }
+                    left--;
+                }
+            }
+
+        })
     }
 
 })

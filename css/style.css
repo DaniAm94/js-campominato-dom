@@ -81,6 +81,7 @@ main {
     color: white;
     cursor: pointer;
     background-color: forestgreen;
+    position: relative;
 }
 
 
@@ -111,7 +112,7 @@ main {
 }
 
 .cell.clicked.bomb {
-    background-color: darkred;
+    background: radial-gradient(yellow, darkred);
 }
 
 .cell.clicked.bomb::before {
@@ -120,11 +121,19 @@ main {
     -webkit-font-smoothing: antialiased;
     font: var(--fa-font-solid);
     content: "\f1e2";
+    color: black;
 }
 
 .bomb-detector {
-    width: 5%;
-    height: 5%;
+    display: none;
+}
+
+.cell.cell.clicked .bomb-detector {
+    display: initial;
+    border-top: 15px solid transparent;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 10px solid yellow;
     color: yellow;
 }
 
@@ -137,21 +146,21 @@ main {
 }
 
 .end-game-display.win {
-    background-color: rgba(173, 255, 47, 0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     color: yellow;
     font-size: 3rem;
     text-align: center;
     line-height: 700px;
-    text-shadow: 0 0 20px purple;
+    text-shadow: 0 0 20px green;
 }
 
 .end-game-display.lose {
-    background-color: rgba(255, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     color: yellow;
     font-size: 3rem;
     text-align: center;
     line-height: 700px;
-    text-shadow: 0 0 20px white;
+    text-shadow: 0 0 20px red;
 }
 
 /* Footer */

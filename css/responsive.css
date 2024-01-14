@@ -3,6 +3,10 @@
         width: 300px;
         height: 300px;
     }
+
+    .cell {
+        font-size: 0.6rem;
+    }
 }
 
 @media screen and (max-width : 960px) {
@@ -24,4 +28,23 @@
     main {
         height: calc(100vh - 270px);
     }
+}
+
+@media screen and (max-width : 420px) {
+
+    select,
+    button {
+        font-size: 1rem;
+    }
+
+    header {
+        justify-content: center;
+    }
+
+
+
+    header {
+        height: 300px;
+    }
+
 }
