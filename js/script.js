@@ -287,7 +287,7 @@ form.addEventListener('submit', e => {
             // TODO Correggere: vengono cliccate celle già cliccate, conteggio score errato
             if (cells[i].children.length < 1) {
                 // auto click in alto fino a trovare un bomb detector
-                while (cells[up] && cells[up + cols].children.length < 1) {
+                while (cells[up] && !cells[up].classList.contains('clicked') && cells[up + cols].children.length < 1) {
                     if (!cells[up].classList.contains('bomb')) {
                         cells[up].classList.add('clicked');
                         scoreBoard.innerText = String(++score).padStart(2, '0');
@@ -295,7 +295,7 @@ form.addEventListener('submit', e => {
                     up -= cols;
                 }
                 // Auto click in basso fino a trovare un bomb detector
-                while (cells[bottom] && cells[bottom - cols].children.length < 1) {
+                while (cells[bottom] && !cells[bottom].classList.contains('clicked') && cells[bottom - cols].children.length < 1) {
                     if (!cells[bottom].classList.contains('bomb')) {
                         cells[bottom].classList.add('clicked');
                         scoreBoard.innerText = String(++score).padStart(2, '0');
@@ -303,7 +303,7 @@ form.addEventListener('submit', e => {
                     bottom += cols;
                 }
                 // Auto click a destra ......
-                while (cells[right] && parseInt(cells[right - 1].innerText) % cols && cells[right - 1].children.length < 1) {
+                while (cells[right] && !cells[right].classList.contains('clicked') && parseInt(cells[right - 1].innerText) % cols && cells[right - 1].children.length < 1) {
                     if (!cells[right].classList.contains('bomb')) {
                         cells[right].classList.add('clicked');
                         scoreBoard.innerText = String(++score).padStart(2, '0');
@@ -311,7 +311,7 @@ form.addEventListener('submit', e => {
                     right++;
                 }
                 // Auto click a sinistra.....
-                while (cells[left] && parseInt(cells[left].innerText) % cols && cells[left + 1].children.length < 1) {
+                while (cells[left] && !cells[left].classList.contains('clicked') && parseInt(cells[left].innerText) % cols && cells[left + 1].children.length < 1) {
                     if (!cells[left].classList.contains('bomb')) {
                         cells[left].classList.add('clicked');
                         scoreBoard.innerText = String(++score).padStart(2, '0');
